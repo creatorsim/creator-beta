@@ -1158,8 +1158,7 @@ export default defineComponent({
       </b-tab>
 
       <!-- Remote -->
-      <!-- TODO: Uncomment when tested -->
-      <!--
+
       <b-tab title="Remote Device" id="flash-tab-remote">
         Remote Device URL:
         <b-form-input
@@ -1206,7 +1205,7 @@ export default defineComponent({
           fluid
           align-h="center"
           class="mx-0 px-0"
-          v-if="targetBoard !== '' && enqueue"
+          v-if="targetBoard && enqueue"
         >
           <b-button size="sm" variant="danger" @click="do_cancel">
             <font-awesome-icon :icon="['fas', 'ban']" />
@@ -1219,7 +1218,7 @@ export default defineComponent({
           fluid
           align-h="center"
           class="mx-0 px-0"
-          v-if="targetBoard != ''"
+          v-if="targetBoard"
         >
           <b-button size="sm" variant="primary" @click="do_enqueue">
             <font-awesome-icon :icon="['fas', 'paper-plane']" />
@@ -1236,7 +1235,6 @@ export default defineComponent({
           our documentation</a
         >.
       </b-tab>
-    -->
     </b-tabs>
   </b-modal>
 </template>
