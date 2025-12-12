@@ -4,3 +4,6 @@
 [submodule "creator-assembler"]
 	path = creator-assembler
 	url = https://github.com/creatorsim/creator-assembler.git
+[submodule "OrangePiDriver"]
+	path = OrangePiDriver
+	url = https://github.com/EUtrilla2002/OrangePiDriver.git
