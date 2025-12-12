@@ -1096,7 +1096,7 @@ export class Memory {
      * // memory.writeWord(98n, [1, 2, 3, 4]);    // Exceeds memory boundary
      * ```
      */
-    writeWord(address: bigint, word: number[]): void {
+    writeWord(address: bigint, word: number[] | Uint8Array): void {
         // check address
         if (address < this.baseAddress) {
             throw new Error(

@@ -26,11 +26,11 @@ import wasm_web_init, {
 
 /**
  * Web-specific assembly compiler that initializes WASM
- * @param {string} code - Assembly code to compile
- * @param {boolean} library - Whether this is a library compilation
- * @returns {Object} Compilation result
+ * @param code Assembly code to compile
+ * @param library Whether this is a library compilation
+ * @returns Assemble result
  */
-export async function assembleCreator(code, library) {
+export async function assembleCreator(code: string, library: boolean) {
     // In the web, we MUST call the default WASM initialization
     await wasm_web_init();
 

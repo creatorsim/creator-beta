@@ -23,7 +23,7 @@ import { REMOTELAB } from "@/web/src/remoteLab.js";
 import { LOCALLAB } from "@/web/src/localGateway.js";
 import { downloadFile, console_log, show_notification } from "@/web/utils.mjs";
 import { creator_ga } from "@/core/utils/creator_ga.mjs";
-import { instructions } from "@/core/assembler/assembler.mjs";
+import { instructions } from "@/core/assembler/assembler.mts";
 
 export default defineComponent({
   props: {

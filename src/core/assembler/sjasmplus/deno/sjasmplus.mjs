@@ -22,7 +22,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { main_memory } from "../../../core.mjs";
-import { parseDebugSymbols, precomputeInstructions } from "../../assembler.mjs";
+import { parseDebugSymbols, precomputeInstructions } from "../../assembler.mts";
 
 export function sjasmplusAssemble(code) {
     // Create a temporary directory

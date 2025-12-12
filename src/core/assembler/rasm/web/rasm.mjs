@@ -25,7 +25,7 @@ import {
     formatErrorWithColors,
     getCleanErrorMessage,
     parseRasmErrorsForLinter,
-} from "../../assembler.mjs";
+} from "../../assembler.mts";
 import { parseDebugSymbolsRASM, toTagInstructions } from "../utils.mjs";
 
 /**

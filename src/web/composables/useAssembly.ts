@@ -20,7 +20,7 @@
 import { ref, readonly } from "vue";
 import { assembly_compile, reset, status, architecture } from "@/core/core.mjs";
 import { resetStats } from "@/core/executor/stats.mts";
-import { instructions } from "@/core/assembler/assembler.mjs";
+import { instructions } from "@/core/assembler/assembler.mts";
 import { show_notification, storeBackup } from "@/web/utils.mjs";
 import { assemblerMap, getDefaultCompiler } from "@/web/assemblers";
 

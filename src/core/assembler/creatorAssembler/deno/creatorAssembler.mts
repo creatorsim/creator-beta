@@ -18,17 +18,21 @@
  */
 
 import { assembleCreatorBase } from "../creatorAssemblerBase.mjs";
+import type { AssembleResult } from "../../assembler.mts";
 
 import { ArchitectureJS, DataCategoryJS } from "./wasm/creator_assembler.js";
 
 /**
  * Deno-specific assembly compiler that uses ANSI color configuration
  * WASM is automatically initialized in Deno version
- * @param {string} code - Assembly code to compile
- * @param {boolean} library - Whether this is a library compilation
- * @returns {Object} Compilation result
+ * @param code Assembly code to compile
+ * @param library Whether this is a library compilation
+ * @returns Assemble result
  */
-export function assembleCreator(code, library) {
+export function assembleCreator(
+    code: string,
+    library: boolean,
+): AssembleResult {
     // Prepare WASM modules for the base compiler
     const wasmModules = {
         ArchitectureJS,

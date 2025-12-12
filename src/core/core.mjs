@@ -24,7 +24,7 @@ import {
     assembly_compiler,
     instructions,
     setInstructions,
-} from "./assembler/assembler.mjs";
+} from "./assembler/assembler.mts";
 import { Memory } from "./memory/Memory.mts";
 
 import {

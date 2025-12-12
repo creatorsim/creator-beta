@@ -26,14 +26,14 @@ import { decode } from "../core/executor/decoder.mjs";
 import process from "node:process";
 import { logger } from "../core/utils/creator_logger.mjs";
 import readline from "node:readline";
-import { instructions } from "../core/assembler/assembler.mjs";
+import { instructions } from "../core/assembler/assembler.mts";
 import { startTutorial } from "./tutorial.mts";
 import yaml from "js-yaml";
 import path from "node:path";
 import { displayHelp } from "./utils.mts";
 import { Buffer } from "node:buffer";
 import { sjasmplusAssemble } from "../core/assembler/sjasmplus/deno/sjasmplus.mjs";
-import { assembleCreator } from "../core/assembler/creatorAssembler/deno/creatorAssembler.mjs";
+import { assembleCreator } from "../core/assembler/creatorAssembler/deno/creatorAssembler.mts";
 import { rasmAssemble } from "../core/assembler/rasm/deno/rasm.mjs";
 import { InterruptHandlerType } from "@/core/executor/InterruptManager.mts";
 import type { Architecture } from "@/core/core";
@@ -1853,7 +1853,6 @@ async function main() {
 
     // Check terminal size
     checkTerminalSize();
-
 
     clearConsole();
     if (!ACCESSIBLE) {

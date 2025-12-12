@@ -17,7 +17,7 @@
  * along with CREATOR.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { instructions, tag_instructions } from "../assembler/assembler.mjs";
+import { instructions, tag_instructions } from "../assembler/assembler.mts";
 import {
     status,
     interruptManager,

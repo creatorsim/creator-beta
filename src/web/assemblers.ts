@@ -23,7 +23,7 @@
  */
 
 import { rasmAssemble } from "@/core/assembler/rasm/web/rasm.mjs";
-import { assembleCreator } from "@/core/assembler/creatorAssembler/web/creatorAssembler.mjs";
+import { assembleCreator } from "@/core/assembler/creatorAssembler/web/creatorAssembler.mts";
 
 /**
  * Assembler function type - flexible to accommodate different assembler signatures

@@ -18,51 +18,85 @@
  */
 
 import { raise } from "../capi/validation.mts";
-import { main_memory, status, architecture } from "../core.mjs";
+import { main_memory, status } from "../core.mjs";
 import { MAXNWORDS } from "../utils/architectureProcessor.mjs";
 import { decode } from "../executor/decoder.mjs";
 import ansicolor from "ansicolor";
 import { resetStats } from "../executor/stats.mts";
 
-/*Instructions memory address*/
-export let address;
-export function setAddress(address_) {
+export type AssembleResult =
+    | {
+          errorcode: string;
+          token: string;
+          type: string;
+          update: string;
+          status: "ok";
+      }
+    | {
+          errorcode: string;
+          type: "error";
+          bgcolor: string;
+          status: string;
+          msg: string;
+          linter: { errorText: string; line: number; column: number };
+      }
+    | Error;
+
+type Instruction = {
+    Address: string;
+    Break: boolean | null;
+    Label: string;
+    binary: boolean;
+    hide: boolean;
+    loaded: string;
+    user: string;
+    visible: boolean;
+    globl?: boolean;
+    _rowVariant?: string;
+};
+
+type InstructionTagMap = { [addr: number]: { tag: string; global: boolean } };
+
+/* Instructions memory address */
+export let address: bigint;
+export function setAddress(address_: bigint) {
     address = address_;
 }
-/*Instructions memory*/
 
-/** @type {import("./assembler.d.ts").Instruction[]} */
-export const instructions = [];
+/* Instructions memory */
+
+export const instructions: Instruction[] = [];
 export function clear_instructions() {
     instructions.splice(0, instructions.length);
 }
-export function setInstructions(instructions_) {
+export function setInstructions(instructions_: Instruction[]) {
     instructions.splice(0, instructions.length, ...instructions_);
 }
 
-/** @type {import("./assembler.d.ts").Instruction[]} */
-export const libraryInstructions = [];
+export const libraryInstructions: Instruction[] = [];
 export function clearLibraryInstructions() {
     libraryInstructions.splice(0, libraryInstructions.length);
 }
-export function setLibraryInstructions(instructions_) {
+export function setLibraryInstructions(instructions_: Instruction[]) {
     libraryInstructions.splice(0, libraryInstructions.length, ...instructions_);
 }
 
-/** @type {import("./assembler.d.ts").InstructionTagMap} */
-export let tag_instructions = {};
-
-export function set_tag_instructions(tag_instructions_) {
+export let tag_instructions: InstructionTagMap = {};
+export function set_tag_instructions(tag_instructions_: InstructionTagMap) {
     tag_instructions = tag_instructions_;
 }
 
 /**
  * Helper function to write multi-byte values as words to memory
- * @param {bigint} addr - Starting memory address
- * @param {Uint8Array} bytes - Array of bytes to write
- * @param {number} wordSizeBytes - Size of each word in bytes
+ * @param addr Starting memory address
+ * @param bytes Array of bytes to write
+ * @param wordSizeBytes Size of each word in bytes
  */
-export function writeMultiByteValueAsWords(addr, bytes, wordSizeBytes) {
+export function writeMultiByteValueAsWords(
+    addr: bigint,
+    bytes: Uint8Array,
+    wordSizeBytes: number,
+) {
     for (
         let wordOffset = 0;
         wordOffset < bytes.length;
@@ -74,7 +108,7 @@ export function writeMultiByteValueAsWords(addr, bytes, wordSizeBytes) {
             i < wordSizeBytes && wordOffset + i < bytes.length;
             i++
         ) {
-            wordBytes[i] = bytes[wordOffset + i];
+            wordBytes[i] = bytes[wordOffset + i]!;
         }
         main_memory.writeWord(addr + BigInt(wordOffset), wordBytes);
     }
@@ -82,10 +116,10 @@ export function writeMultiByteValueAsWords(addr, bytes, wordSizeBytes) {
 
 /**
  * Converts error messages containing ANSI escape codes to HTML with CSS styling
- * @param {string|Error} error - Error message or Error object containing ANSI escape codes
- * @returns {string} HTML string with CSS styling preserving original colors
+ * @param error Error message or Error object containing ANSI escape codes
+ * @returns HTML string with CSS styling preserving original colors
  */
-export function formatErrorWithColors(error) {
+export function formatErrorWithColors(error: string | Error): string {
     // Parse the error string (which contains ANSI escape codes) into spans
     const errorMsg = String(error);
     const parsed = ansicolor.parse(errorMsg);
@@ -103,7 +137,7 @@ export function formatErrorWithColors(error) {
     return htmlMsg;
 }
 
-export function getCleanErrorMessage(error) {
+export function getCleanErrorMessage(error: Error) {
     const errorMsg = String(error);
     const parsed = ansicolor.parse(errorMsg);
     const cleanMsg = parsed.spans.map(span => span.text).join("");
@@ -113,10 +147,12 @@ export function getCleanErrorMessage(error) {
 /**
  * Parse a clean error message to extract structured error information for linting
  * Example input: "[E02] Error: Instruction no isn't defined\n   ╭─[ assembly:3:1 ]\n   │\n 3 │ no\n..."
- * @param {string} cleanErrorMessage - The clean error message (without ANSI codes)
- * @returns {{errorText: string, line: number, column: number} | null} Parsed error information or null if parsing fails
+ * @param cleanErrorMessage The clean error message (without ANSI codes)
+ * @returns Parsed error information or null if parsing fails
  */
-export function parseErrorForLinter(cleanErrorMessage) {
+export function parseErrorForLinter(
+    cleanErrorMessage: string,
+): { errorText: string; line: number; column: number } | null {
     if (!cleanErrorMessage || typeof cleanErrorMessage !== "string") {
         return null;
     }
@@ -141,8 +177,8 @@ export function parseErrorForLinter(cleanErrorMessage) {
             : null;
     }
 
-    const line = parseInt(locationMatch[1], 10);
-    const column = parseInt(locationMatch[2], 10);
+    const line = parseInt(locationMatch[1]!, 10);
+    const column = parseInt(locationMatch[2]!, 10);
 
     return {
         errorText: errorText || "Compilation error",
@@ -154,10 +190,12 @@ export function parseErrorForLinter(cleanErrorMessage) {
 /**
  * Parse RASM assembler error messages to extract multiple errors
  * Example input: "Pre-processing [program.asm]\nAssembling\n[program.asm:2] Unknown LD format\n[program.asm:3] Unknown LD format\n2 errors"
- * @param {string} cleanErrorMessage - The clean error message (without ANSI codes)
- * @returns {{errorText: string, line: number, column: number}[]} Array of parsed error information
+ * @param cleanErrorMessage The clean error message (without ANSI codes)
+ * @returns Array of parsed error information
  */
-export function parseRasmErrorsForLinter(cleanErrorMessage) {
+export function parseRasmErrorsForLinter(
+    cleanErrorMessage: string,
+): { errorText: string; line: number; column: number }[] {
     if (!cleanErrorMessage || typeof cleanErrorMessage !== "string") {
         return [];
     }
@@ -170,8 +208,8 @@ export function parseRasmErrorsForLinter(cleanErrorMessage) {
     let match;
 
     while ((match = errorPattern.exec(cleanErrorMessage)) !== null) {
-        const line = parseInt(match[2], 10);
-        const errorMessage = match[3].trim();
+        const line = parseInt(match[2]!, 10);
+        const errorMessage = match[3]!.trim();
 
         errors.push({
             errorText: errorMessage,
@@ -205,7 +243,11 @@ export function parseRasmErrorsForLinter(cleanErrorMessage) {
     return errors;
 }
 
-export function precomputeInstructions(sourceCode, sourceMap, tags = null) {
+export function precomputeInstructions(
+    sourceCode: string,
+    sourceMap?: { [addr: number]: number },
+    tags?: { [key: string]: string | number | bigint },
+) {
     // When we don't use the default assembler, we need to precompute the instructions.
     // This is the array used to display the instructions in the UI.
     // To do so, we iterate through the binary file, and decode the instructions, adding them to the instructions array.
@@ -214,7 +256,7 @@ export function precomputeInstructions(sourceCode, sourceMap, tags = null) {
 
     // First we need to fetch only the addresses that have been written to memory.
     const segments = main_memory.getMemorySegments();
-    const textSegment = segments.get("text");
+    const textSegment = segments.get("text")!;
     let memory = main_memory.getWrittenAddresses();
     memory = memory.filter(
         addr =>
@@ -230,18 +272,19 @@ export function precomputeInstructions(sourceCode, sourceMap, tags = null) {
     const instructions = [];
     let idx = 0;
     while (idx < memory.length) {
-        const addr = memory[idx];
+        const addr = memory[idx]!;
         const words = [];
         const allBytes = [];
         // Read up to MAXNWORDS words starting from the current address
         for (let j = 0; j < MAXNWORDS && idx + j < memory.length; j++) {
-            const wordBytes = main_memory.readWord(BigInt(memory[idx + j]));
+            const wordBytes = main_memory.readWord(BigInt(memory[idx + j]!));
             const word = Array.from(new Uint8Array(wordBytes))
                 .map(byte => byte.toString(16).padStart(2, "0"))
                 .join("");
             words.push(word);
             allBytes.push(...new Uint8Array(wordBytes));
         }
+
         const decoded = decode(new Uint8Array(allBytes));
 
         if (decoded.status === "ok") {
@@ -264,7 +307,7 @@ export function precomputeInstructions(sourceCode, sourceMap, tags = null) {
             if (sourceMap && sourceMap[addr]) {
                 const lineNumber = sourceMap[addr];
                 if (lineNumber > 0 && lineNumber <= sourceLines.length) {
-                    let line = sourceLines[lineNumber - 1];
+                    let line = sourceLines[lineNumber - 1]!;
 
                     line = line.replace(/;.*/, "").trim();
 
@@ -296,14 +339,14 @@ export function precomputeInstructions(sourceCode, sourceMap, tags = null) {
     setInstructions(instructions);
 }
 
-export function parseDebugSymbols(debugSymbols) {
-    const symbols = {};
+export function parseDebugSymbols(debugSymbols: string) {
+    const symbols: { [tag: string]: number } = {};
     const lines = debugSymbols.split("\n");
     for (const line of lines) {
         const parts = line.split(/\s+/);
         if (parts.length < 2) continue; // Skip invalid lines
         // In each line, the tag is whatever is before ":", and the address is whatever is after "0x"
-        const tag = parts[0].replace(":", "");
+        const tag = parts[0]!.replace(":", "");
 
         // now search in the full line for the address
         const address = parts.find(part => part.startsWith("0x"));
@@ -318,11 +361,12 @@ export function parseDebugSymbols(debugSymbols) {
 
 /**
  * Dispatcher for assembly compilers.
- * @param {string} code
- * @param {any} library
- * @param {string} compiler
  */
-export function assembly_compiler(code, library, compiler) {
+export function assembly_compiler(
+    code: string,
+    library: boolean,
+    compiler: (code: string, library: boolean) => AssembleResult,
+) {
     // If no compiler is specified, error out
     if (!compiler) {
         raise("No compiler specified for assembly compilation");

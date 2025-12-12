@@ -29,7 +29,7 @@ import {
 import {
   instructions as coreInstructions,
   setInstructions,
-} from "@/core/assembler/assembler.mjs";
+} from "@/core/assembler/assembler.mts";
 import { step } from "@/core/executor/executor.mjs";
 import { creator_ga } from "@/core/utils/creator_ga.mjs";
 import { packExecute } from "@/core/utils/utils.mjs";

@@ -24,7 +24,7 @@ import { main_memory } from "../../../core.mjs";
 import {
     precomputeInstructions,
     set_tag_instructions,
-} from "../../assembler.mjs";
+} from "../../assembler.mts";
 import { parseDebugSymbolsRASM, toTagInstructions } from "../utils.mjs";
 
 /**

@@ -39,7 +39,7 @@ import {
     formatErrorWithColors,
     getCleanErrorMessage,
     parseErrorForLinter,
-} from "../assembler.mjs";
+} from "../assembler.mts";
 import { logger } from "../../utils/creator_logger.mjs";
 
 let libraryInstructions = [];
@@ -499,9 +499,9 @@ function writeInstructionsToMemory(instructions, library_instructions) {
 
 /**
  * Compile assembly code as a library
- * @param {string} code - Assembly code to compile
- * @param {Object} wasmModules - WASM modules containing ArchitectureJS and DataCategoryJS
- * @returns {Object} Compilation result
+ * @param {string} code Assembly code to compile
+ * @param {Object} wasmModules WASM modules containing ArchitectureJS and DataCategoryJS
+ * @returns {AssembleResult} Assemble result
  */
 export function assembleCreatorLibrary(code, wasmModules) {
     /* Google Analytics */
@@ -591,9 +591,9 @@ export function assembleCreatorLibrary(code, wasmModules) {
 
 /**
  * Compile assembly code as a normal program
- * @param {string} code - Assembly code to compile
- * @param {Object} wasmModules - WASM modules containing ArchitectureJS and DataCategoryJS
- * @returns {Object} Compilation result
+ * @param {string} code Assembly code to compile
+ * @param {Object} wasmModules WASM modules containing ArchitectureJS and DataCategoryJS
+ * @returns {AssembleResult} Compilation result
  */
 export function assembleCreatorProgram(code, wasmModules) {
     /* Google Analytics */
@@ -696,7 +696,7 @@ export function assembleCreatorProgram(code, wasmModules) {
  * @param {string} code - Assembly code to compile
  * @param {boolean} library - Whether this is a library compilation
  * @param {Object} wasmModules - WASM modules containing ArchitectureJS and DataCategoryJS
- * @returns {Object} Compilation result
+ * @returns {AssembleResult} Compilation result
  */
 export function assembleCreatorBase(code, library, wasmModules) {
     if (library) {

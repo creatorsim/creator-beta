@@ -32,7 +32,7 @@ import {
 } from "./utils.mjs";
 import { set_debug, status, reset } from "@/core/core.mjs";
 import { stats } from "@/core/executor/stats.mts";
-import { instructions } from "@/core/assembler/assembler.mjs";
+import { instructions } from "@/core/assembler/assembler.mts";
 import type { StackFrame } from "@/core/memory/StackTracker.mjs";
 import { creator_ga } from "@/core/utils/creator_ga.mjs";
 import { InterruptHandlerType } from "@/core/executor/InterruptManager.mjs";

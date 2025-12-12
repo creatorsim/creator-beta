@@ -32,9 +32,9 @@ import {
     crex_findReg,
 } from "../core/register/registerLookup.mjs";
 import { logger } from "../core/utils/creator_logger.mjs";
-import { instructions } from "../core/assembler/assembler.mjs";
+import { instructions } from "../core/assembler/assembler.mts";
 import { sjasmplusAssemble } from "../core/assembler/sjasmplus/deno/sjasmplus.mjs";
-import { assembleCreator } from "../core/assembler/creatorAssembler/deno/creatorAssembler.mjs";
+import { assembleCreator } from "../core/assembler/creatorAssembler/deno/creatorAssembler.mts";
 import { rasmAssemble } from "../core/assembler/rasm/deno/rasm.mjs";
 import fs from "node:fs";
 import type { StackTracker } from "@/core/memory/StackTracker.mjs";

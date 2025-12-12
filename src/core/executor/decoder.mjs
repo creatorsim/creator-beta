@@ -583,7 +583,7 @@ function processAllFields(instruction, binaryInstruction) {
  * Decodes a binary instruction from a Uint8Array.
  *
  * @param {string|Uint8Array} toDecode - The instruction to decode  (Uint8Array)
- * @returns {string|Object} Decoded instruction in the requested format
+ * @returns {{status: "ok", instruction: import("../core.mjs").Instruction, decodedFields: Object[], assembly: string} | {status: "ko", reason: string}} Decoded instruction in the requested format
  * @throws {Error} When instruction cannot be decoded or is unknown
  */
 export function decode(toDecode) {

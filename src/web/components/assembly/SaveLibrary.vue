@@ -19,9 +19,9 @@ along with CREATOR.  If not, see <http://www.gnu.org/licenses/>.
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useToggle } from "bootstrap-vue-next";
-import { libraryInstructions } from "@/core/assembler/assembler.mjs";
+import { libraryInstructions } from "@/core/assembler/assembler.mts";
 import { show_notification } from "@/web/utils.mjs";
-import { assembleCreator } from "@/core/assembler/creatorAssembler/web/creatorAssembler.mjs";
+import { assembleCreator } from "@/core/assembler/creatorAssembler/web/creatorAssembler.mts";
 import { architecture } from "@/core/core.mjs";
 import yaml from "js-yaml";
 

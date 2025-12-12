@@ -18,7 +18,7 @@
  */
 
 import { architecture, getPC, REGISTERS, stackTracker } from "../core.mjs";
-import { tag_instructions } from "../assembler/assembler.mjs";
+import { tag_instructions } from "../assembler/assembler.mts";
 import { crex_show_notification } from "../../web/utils.mjs";
 import { sentinel } from "../sentinel/sentinel.mjs";
 import { creator_ga } from "../utils/creator_ga.mjs";

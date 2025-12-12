@@ -10,7 +10,7 @@ import { assertEquals } from "https://deno.land/std/assert/mod.ts";
 import { ARCH as RISCV } from "@/core/capi/arch/riscv.mjs";
 import fs from "node:fs";
 import { rasmAssemble } from "@/core/assembler/rasm/deno/rasm.mjs";
-import { assembleCreator } from "@/core/assembler/creatorAssembler/deno/creatorAssembler.mjs";
+import { assembleCreator } from "@/core/assembler/creatorAssembler/deno/creatorAssembler.mts";
 import yaml from "js-yaml";
 
 export interface ArchResult {

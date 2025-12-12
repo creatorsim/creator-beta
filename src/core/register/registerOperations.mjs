@@ -19,7 +19,7 @@
 
 import { architecture, status, REGISTERS } from "../core.mjs";
 import { writeStackLimit } from "../executor/executor.mjs";
-import { instructions } from "../assembler/assembler.mjs";
+import { instructions } from "../assembler/assembler.mts";
 import { sentinel } from "../sentinel/sentinel.mjs";
 import { packExecute } from "../utils/utils.mjs";
 import { coreEvents } from "../events.mts";
