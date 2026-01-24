@@ -388,14 +388,14 @@ function executeInstructionCycle() {
         return processingResult;
     }
 
-    // Handle any pending interrupts
-    handleInterrupts();
-
     // handle timer
     handleTimer();
 
-    // Handle Devices
+    // handle devices
     handleDevices();
+
+    // Handle any pending interrupts
+    handleInterrupts();
 
     // Update execution status and determine next instruction
     const statusResult = updateExecutionStatus();

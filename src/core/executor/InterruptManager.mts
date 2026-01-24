@@ -147,12 +147,11 @@ class CREATORInterruptHandler extends InterruptHandler {
 class ArchitectureInterruptHandler extends InterruptHandler {
     #config = this.config!;
 
-    //**
-    /* This is high wizardry to make the functions ignore the `status` parameter,
-    /* while creating an `injectedFunction`. It has the same interface as
-    /* `Function`.
+    /** This is high wizardry to make the functions ignore the `status`
+     * parameter, while creating an `injectedFunction`.
+     *
+     * It has the same interface as JavaScript's `Function`.
      */
-
     #makeInjectedFunction(...args: string[]) {
         const f = injectedFunction(...args);
         return (_status: InterruptStatus, ...sargs: unknown[]) => f(...sargs);
