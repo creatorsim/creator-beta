@@ -45,7 +45,7 @@ interrupt type.
 
 ### Functions
 The following functions, belonging to
-[`core/executor/interrupts.mts`](../src/core/executor/interrupts.mts), were implemented:
+[`core/capi/interrupts.mts`](../src/core/capi/interrupts.mts), were implemented:
 - `enableInterrupts(null) -> null`: Enables interrupts by calling
 `architecture.interrupts.enable`.
 - `disableInterrupts(null) -> null`: Disables interrupts by calling
@@ -72,7 +72,7 @@ The variables that control the interrupts are stored in `core:status`:
 
 ## Example: Interrupts in RISC-V
 An example of RISC-V with interruptions can be found in the
-[`RISC_V_RV32IMFD_Interrupts.json`](../architecture/RISC_V_RV32IMFD_Interrupts.json)
+[`RV32IMFD.yml`](../architecture/RISCV/RV32IMFD.yml)
 file.
 
 ### Interrupt mechanism
@@ -119,7 +119,7 @@ register.
 
 ### Interrupt handling
 A full example of handling an environment call is provided in
-[`examples/riscv-interrupts/ex0.s`](../examples/riscv-interrupts/ex0.s).
+[`examples/riscv-interrupts/ex0.s`](../examples/RISCV-32-interrupts/ex0.s).
 
 First, we need to talk about some new privileged instructions:
 
@@ -135,7 +135,6 @@ control register is provided in order to add an extra register.
 Reference: [The RISC-V Instruction Set Manual Volume II: Privileged
 Architecture](https://github.com/riscv/riscv-isa-manual/), chapters 3.1, 3.3.1
 and 3.3.2.
-
 
 
 
