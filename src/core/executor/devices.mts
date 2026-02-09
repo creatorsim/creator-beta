@@ -76,8 +76,8 @@ export abstract class Device {
         this.memory = new Memory({
             sizeInBytes: maxAddr - minAddr + 1,
             baseAddress: BigInt(minAddr),
-            bitsPerByte: 8,
-            wordSize: 4,
+            bitsPerByte: 8, // TODO: extract from arch?
+            wordSize: 4, // TODO: extract from arch?
             endianness: [0, 1, 2, 3], // Big Endian
         });
 
