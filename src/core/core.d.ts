@@ -114,7 +114,7 @@ type ArchitectureInterrupts = {
     global_disable: string;
     check: string;
     is_enabled?: string;
-    is_global_enabled: string;
+    is_global_enabled?: string;
     clear?: string;
     global_clear: string;
     create: string;
