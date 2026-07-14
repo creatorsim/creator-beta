@@ -386,6 +386,7 @@ export class InterruptManager {
         [...this.status.enabled.keys()].forEach(key => {
             this.status.enabled.set(key, true);
         });
+        this.status.globalEnabled = true
 
         this.#syncEnabledInterrupts();
 
