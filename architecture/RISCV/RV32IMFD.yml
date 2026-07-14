@@ -4171,3 +4171,22 @@ timer:
     registers.mie |= 2n ** 7n; // MTIE = 1
   disable: |
     registers.mie &= ~(2n ** 7n); // MTIE = 0
+
+devices:
+  - id: console
+    cls: ConsoleDevice
+    ctrl_addr: 0xf0000000
+    status_addr: 0xf0000004
+    data:
+      start: 0xf0000008
+      end: 0xf000000f
+    enabled: true
+
+  - id: os
+    cls: OSDriver
+    ctrl_addr: 0xf0000010
+    status_addr: 0xf0000014
+    data:
+      start: 0xf0000018
+      end: 0xf000001f
+    enabled: true
