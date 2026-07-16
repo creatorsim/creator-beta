@@ -1186,8 +1186,7 @@
         "global_clear",
         "global_disable",
         "global_enable",
-        "handlers",
-        "is_global_enabled"
+        "handlers"
       ],
       "properties": {
         "check": {
@@ -1235,8 +1234,8 @@
           "type": ["string", "null"]
         },
         "is_global_enabled": {
-          "description": "JS code to check whether interrupts are globally is enabled. Must return a boolean",
-          "type": "string"
+          "description": "JS code to check whether interrupts are globally is enabled. Must return a boolean. If not specified, always returns `true`",
+          "type": ["string", "null"]
         }
       }
     },
