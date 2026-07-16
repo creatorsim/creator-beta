@@ -583,7 +583,7 @@
   <h2 align="center">Developing CREATOR</h2>
 </div>
 
-See [`docs/dev.md`](https://github.com/creatorsim/creator/blob/master/docs/dev.md).
+See [`docs/dev.md`](https://github.com/creatorsim/creator/blob/master/docs/BUILD.md).
 
 
 
