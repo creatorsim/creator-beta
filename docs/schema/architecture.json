@@ -1334,7 +1334,7 @@
       "required": ["definition", "name"],
       "properties": {
         "definition": {
-          "description": "Code to execute for the instruction",
+          "description": "Pseudoinstruction expansion definition. Can be either a instruction sequence template or a `JS` function\n\n# Instruction Sequence Form\n\nA string containing a newline/semicolon separated list of assembly instructions. Each instruction will be assembled as if it was specified by the user.\n\nIdentifiers in sub-expressions that match the name of one of the pseudoinstruction's fields will be automatically replaced with the corresponding argument's value. This allows forwarding the arguments and manipulation of the arguments within expressions. Forward references are supported when using this form.\n\n# Function Form\n\nA `JS` function body prefixed by `js:\\n`. The signature of this function should be:\n\n```ts\n(pc: bigint, args: Array<number | bigint | string | null>) => string\n```\n\nWhere:\n\n- `pc`: address in which the pseudoinstruction is being assembled into\n- `args`: array of evaluated pseudoinstruction arguments in the order they appear in the assembly syntax, where `number` is used for expressions that evaluate to a float, `bigint` for those that evaluate to an integer, `string` for simple identifiers (register names) and `null` for those that can't be evaluated (expressions containing undefined labels/forward references)\n- The returned string must be the definition in instruction sequence form\n- The function is allowed to throw any `JS` value that can be converted to a string, which will be displayed in error messages",
           "type": "string"
         },
         "fields": {
