@@ -162,6 +162,14 @@
 </details>
 
 <details>
+<summary>:newspaper: CREATOR: A RISC-V web simulator based on Sail specification language</summary>
+
+  * Conference poster: RISC-V Summit Europe
+  * Authors: Juan Carlos Cano-Resa, Félix García-Carballeira, Diego Camarmas-Alonso, Alejandro Calderón-Mateos
+  * [:link: Open publication](https://doi.org/10.13140/RG.2.2.12039.36002)
+</details>
+
+<details>
 <summary>:newspaper: CREATOR: entorno de desarrollo integrado para la docencia y la investigación en arquitecturas RISC-V</summary>
 
   * Seminar: Jornadas Sarteco
